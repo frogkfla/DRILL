@@ -48,7 +48,8 @@ class Boy:
         self.frame = 0
 
     def fire_ball(self, image_path='ball41x41.png'):
-        ball = Ball(self.x, self.y, self.face_dir * 10, image_path)
+        spawn_y = self.y - 20 if image_path == 'ball41x41.png' else self.y - 30
+        ball = Ball(self.x, spawn_y, self.face_dir * 10, image_path)
         game_world.add_oject(ball)
 
     def handle_event(self, event):
