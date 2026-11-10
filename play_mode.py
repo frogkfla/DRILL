@@ -6,6 +6,8 @@ from grass import Grass
 import title_mode
 import pause_mode
 
+item_select_image = None
+
 
 def handle_events():
     event_list = get_events()
@@ -24,8 +26,9 @@ def handle_events():
 
 
 def init():
-    global boy
+    global boy, item_select_image
 
+    item_select_image = load_image('item_select.png')
 
     boy = Boy()
     game_world.add_oject(boy)
@@ -42,12 +45,15 @@ def update():
 def render():
     clear_canvas()
     game_world.render()
+    item_select_image.draw(150, 485)
     update_canvas()
 
 def finish():
-    global boy
+    global boy, item_select_image
     game_world.clear()
     boy = None
+    del item_select_image
+    item_select_image = None
 
 
 def pause():
