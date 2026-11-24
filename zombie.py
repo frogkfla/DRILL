@@ -61,4 +61,15 @@ class Zombie:
         return self.x - half, self.y - half, self.x + half, self.y + half
 
 
+    def handle_collision(self, group, other):
+        if group == 'ball:zombie':
+            self.hit_count += 1
+
+            if self.hit_count == 1:
+                old_size = self.size
+                self.size /= 2
+                self.y -= (old_size - self.size) / 2 
+            else:
+                game_world.remove_object(self)
+            
     
