@@ -56,7 +56,7 @@ class Zombie:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        half = self.size / 2 
+        half = self.size / 2  
         return self.x - half , self.y - half , self.x + half , self.y + half 
   
 
@@ -66,7 +66,7 @@ class Zombie:
 
             if self.hit_count == 1:
                 old_size = self.size
-                self.size /= 2
+                self.size /= 2 
                 self.y -= (old_size - self.size) / 2
             else:
                 game_world.remove_object(self)
