@@ -16,7 +16,7 @@ class Ball:
     def __init__(self, x, y, direction, ball_type=1):
         if ball_type not in Ball.images:
             Ball.images[ball_type] = load_image(
-                'ball21x21.png' if ball_type == 1 else 'ball41x41.png')
+                'ball21x21.png' if ball_type == 1 else 'ball41x41.png') ### 1이면 작공 2면 큰공
         self.image = Ball.images[ball_type]
         self.x, self.y = x, y
         self.velocity_x = direction * LAUNCH_SPEED_X
@@ -42,15 +42,18 @@ class Ball:
     #####
     def get_bb(self): 
         return (self.x - 10, self.y - 10, self.x + 10, self.y + 10)
-
-
+    
+        
     #####
     def handle_collision(self, group, other):
         if group == 'boy:ball': # 볼이 소년과 만나면 
             game_world.remove_object(self) # 볼 지움
 
+        elif group == 'ball:zombie':
+            game_world.remove_object(self)  
+
         elif group == 'grass:ball':
-            self.y = 60
+            self.y = 60 
             self.velocity_y = 0
             self.stopped = True
 

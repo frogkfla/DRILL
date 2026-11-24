@@ -34,6 +34,7 @@ def init():
     #####
     global balls
     balls = [Ball(random.randint(100, 1700), 60, 0) for _ in range(30)]
+    
 
     game_world.add_oject(boy)
     game_world.add_oject(grass, 0)
@@ -46,9 +47,14 @@ def init():
         game_world.add_collision_pair('boy:ball', None, ball)
         game_world.add_collision_pair('grass:ball', None, ball)
 
+    # Drill 15: 좀비 생성 및 충돌 그룹 등록
+    global zombies
     zombies = [Zombie() for _ in range(4)]
     game_world.add_objects(zombies, 1)
-
+    game_world.add_collision_pair('boy:zombie', boy, None)
+    for zombie in zombies:
+        game_world.add_collision_pair('boy:zombie', None, zombie)
+        game_world.add_collision_pair('ball:zombie', None, zombie)
     
 
 
@@ -79,8 +85,6 @@ def update():
     #        balls.remove(ball) # ball이라는 그릇(리스트)에선 지웠지만 balls에는 (메모리상) 남아있음. 그걸 지우는 코드
 
     game_world.handle_collisions() #####
-
-
 
 
 def render():

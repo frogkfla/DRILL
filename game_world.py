@@ -29,8 +29,6 @@ def render():
             o.draw()
 
 
-
-
 def clear():
     for layer in world:
         layer.clear()
@@ -64,18 +62,21 @@ def add_collision_pair(group, a, b):
         collision_pairs[group][1].append(b)
 
 
-
 # 충돌 페어로 등록된 오브젝트들에 대해 충돌을 검사하고, 충돌 시 콜백 함수를 호출
 def handle_collisions():
-    for group, pairs in collision_pairs.items(): #items : 딕셔너리에서 키와 값을 구분하여 키->group 값->pairs로 보내줌
-        for a in pairs[0]:
-            for b in pairs[1]:
+    for group, pairs in collision_pairs.items():
+        for a in pairs[0][:]:
+            for b in pairs[1][:]:
+                # 충돌 콜백에서 제거된 객체는 다시 검사하지 않음
+                if a not in pairs[0] or b not in pairs[1]:
+                    continue
                 if collide(a, b):
                     a.handle_collision(group, b)
-                    b.handle_collision(group, a)
+                    # 첫 콜백에서 b가 제거되어도 중복 호출하지 않도록 확인
+                    if b in pairs[1]:
+                        b.handle_collision(group, a)
 
 
-#####
 def remove_collision_object(o):
     for pairs in collision_pairs.values():
         if o in pairs[0]:

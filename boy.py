@@ -3,7 +3,7 @@ from math import pi
 from pico2d import *
 
 from sdl2 import (SDL_KEYDOWN, SDL_KEYUP, SDLK_LEFT, SDLK_RIGHT,
-                  SDLK_SPACE)
+                  SDLK_SPACE) 
 from transitions import Machine
 
 import game_world
@@ -149,6 +149,8 @@ class Boy:
         game_world.add_oject(ball)
         game_world.add_collision_pair('boy:ball', None, ball)
         game_world.add_collision_pair('grass:ball', None, ball)
+        ### 추가
+        game_world.add_collision_pair('ball:zombie', ball, None) # 발사한 공만 좀비와 충돌하도록 등록
 
 
 
@@ -158,7 +160,9 @@ class Boy:
             self.dir = 0
             self.stop_run()
 
+
     def handle_event(self, event):
+
         if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
             self.states[self.state].space(self)
             return
@@ -191,10 +195,11 @@ class Boy:
         self.font.draw(self.x - 10, self.y + 50, f'{self.ball_count:02d}', (255, 255, 0))
         draw_rectangle(*self.get_bb()) #####
 
+
     #####
     # 소년의 충돌 영역을 계산하여 바운딩 박스 리턴
     def get_bb(self):
-        return self.x - 20, self.y - 50, self.x + 20, self.y + 50
+        return self.x - 20, self.y - 40, self.x + 20, self.y + 40
 
 
     # 충돌 그룹 이름이 boy:ball이면 소년이 공과 충돌한 경우임
@@ -202,4 +207,6 @@ class Boy:
         if group == 'boy:ball':
             # 소년이 공과 충돌했을 때 처리
             self.ball_count += 1
-            
+
+        elif group == 'boy:zombie': # 소년과 좀비가 만나면
+            game_framework.quit() # 게임 루프 종료 
