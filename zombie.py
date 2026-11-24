@@ -57,7 +57,7 @@ class Zombie:
 
     def get_bb(self):
         half = self.size / 2 
-        return self.x - half, self.y - half, self.x + half, self.y + half 
+        return self.x - half , self.y - half , self.x + half , self.y + half 
   
 
     def handle_collision(self, group, other):

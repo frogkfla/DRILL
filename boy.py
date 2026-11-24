@@ -107,7 +107,7 @@ class Boy:
         self.face_dir = 1
         self.pressed_keys = set()
         self.item = 'Ball'
-        self.ball_count = 10  # 가지고 있는 공의 개수
+        self.ball_count = 20  # 가지고 있는 공의 개수
 
         self.states = {'IDLE': Idle(), 'SLEEP': Sleep(), 'RUN': Run()}
 
