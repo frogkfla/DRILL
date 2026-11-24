@@ -71,5 +71,9 @@ class Zombie:
                 self.y -= (old_size - self.size) / 2 
             else:
                 game_world.remove_object(self)
+
+        elif group == 'boy:zombie':
+            pass  
+
             
     
