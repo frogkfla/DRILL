@@ -57,4 +57,8 @@ class Zombie:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+        half = self.size / 2
+        return self.x - half, self.y - half, self.x + half, self.y + half
+
+
+    
